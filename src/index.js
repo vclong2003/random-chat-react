@@ -5,12 +5,14 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "./components/layouts/mainLayout";
 import Home from "./pages/home";
+import Login from "./pages/login";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route element={<MainLayout />}>
           <Route index element={<Home />} />
         </Route>

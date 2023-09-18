@@ -6,6 +6,7 @@
   border-right: 1px solid var(--divider-color);
   border-left: 1px solid var(--divider-color);
   padding: 0;
+  background-color: var(--page-background-color);
 }
 .pageTitle {
   font-size: 1.2rem;
@@ -14,12 +15,15 @@
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 20px;
+  background-color: var(--white-color);
 }
 .postContainer {
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 15px;
   padding-right: 15px;
+  border-bottom: 1px solid var(--divider-color);
+  background-color: var(--white-color);
 }
 
 .postInputContainer {
@@ -36,17 +40,35 @@
   outline: none;
   border: none;
   margin-left: 12px;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 
 .postButtonsContainer {
   width: 100%;
   display: flex;
+  padding-left: 58px;
   justify-content: space-between;
+  align-items: center;
 }
 .imageUploadIcon {
   width: 20px;
   height: 20px;
 }
 .postButton {
+  color: var(--white-color);
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  background-color: var(--primary-blue);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+.postButton:disabled {
+  opacity: 0.5;
 }

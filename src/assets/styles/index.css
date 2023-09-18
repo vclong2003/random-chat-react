@@ -2,6 +2,9 @@
 
 :root {
   --divider-color: #ebeef0;
+  --white-color: #ffffff;
+  --primary-blue: #1da1f2;
+  --page-background-color: #f7f9fa;
 }
 
 body {

@@ -26,7 +26,9 @@ export default function Home() {
             className={styles.imageUploadIcon}
           />
 
-          <button className={styles.postButton}>Tweet</button>
+          <button disabled className={styles.postButton}>
+            Tweet
+          </button>
         </div>
       </Container>
     </Container>

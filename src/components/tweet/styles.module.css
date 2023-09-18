@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--white-color);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-top: 1px solid var(--divider-color);
+  border-bottom: 1px solid var(--divider-color);
+}
+.leftCol {
+  width: 50px;
+  margin-right: 14px;
+}
+.rightCol {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.username {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--black-color);
+  margin-right: 10px;
+}
+.time {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--gray-color);
+}
+.tweetText {
+  width: 100%;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--black-color);
+
+  margin-bottom: 10px;
+}
+.tweetImg {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.tweetActionButtons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+.actionBtnContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 25px;
+}
+.actionBtnIcon {
+  margin-right: 10px;
+}
+.actionBtnCount {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-color);
+}

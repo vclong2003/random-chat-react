@@ -1,6 +1,7 @@
 import { Container } from "react-bootstrap";
 import styles from "./styles.module.css";
 import Avatar from "../../components/avatar";
+import Tweet from "../../components/tweet";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Container fluid className={styles.pageTitle}>
         Home
       </Container>
+
       <Container fluid className={styles.postContainer}>
         <div className={styles.postInputContainer}>
           <div className={styles.postInputAvatar}>
@@ -30,6 +32,10 @@ export default function Home() {
             Tweet
           </button>
         </div>
+      </Container>
+
+      <Container fluid className={styles.tweetContainer}>
+        <Tweet />
       </Container>
     </Container>
   );

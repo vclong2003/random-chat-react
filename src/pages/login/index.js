@@ -8,18 +8,23 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const queryString = new URLSearchParams(window.location.search);
+  const destination = queryString.get("to") ?? "/";
+
   const loginMutation = useMutation({
     mutationFn: (evt) => {
       evt.preventDefault();
       return login(username, password);
     },
     onSuccess: (data) => {
-      console.log(data);
+      sessionStorage.setItem("accessToken", data.accessToken);
+      window.location.href = destination;
     },
   });
 
   return (
     <Container className={styles.container}>
+      {console.log(queryString.get("to"))}
       <Image
         className={styles.logo}
         alt=""

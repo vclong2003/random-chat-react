@@ -16,6 +16,7 @@ export default function Home() {
 
   return (
     <Container fluid className={styles.container}>
+      {console.log(sessionStorage.getItem("accessToken"))}
       {testQuery.isLoading && <div>Loading...</div>}
       {testQuery.isSuccess && <div>{testQuery.data}</div>}
       <Container fluid className={styles.pageTitle}>

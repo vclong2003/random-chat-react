@@ -1,11 +1,13 @@
 import axios from "axios";
 import { api_endpoint } from "./config";
 
+// Get access token from server then store it in sessionStorage
 export const getAccessToken = async () => {
   const res = await axios.get(`${api_endpoint}/auth/refresh_token`, {
     withCredentials: true,
   });
-  return res.data;
+  sessionStorage.setItem("accessToken", res.data.accessToken);
+  return;
 };
 
 export const login = async (username, password) => {

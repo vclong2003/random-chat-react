@@ -3,14 +3,18 @@ import { api_endpoint } from "./config";
 
 export const getUserInfo = async () => {
   const res = await axios.get(`${api_endpoint}/user`, {
-    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+    },
   });
   return res.data;
 };
 
 export const findUserByName = async (username) => {
   const res = await axios.get(`${api_endpoint}/user/${username}`, {
-    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+    },
   });
   return res.data;
 };
@@ -21,7 +25,11 @@ export const updateUsername = async (username) => {
     {
       username,
     },
-    { withCredentials: true }
+    {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    }
   );
 
   return res.data;
@@ -33,7 +41,11 @@ export const followUser = async (followId) => {
     {
       followId,
     },
-    { withCredentials: true }
+    {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    }
   );
 
   return res.data;
@@ -45,7 +57,11 @@ export const unfollowUser = async (unfollowId) => {
     {
       unfollowId,
     },
-    { withCredentials: true }
+    {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    }
   );
 
   return res.data;

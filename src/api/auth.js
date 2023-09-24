@@ -1,18 +1,8 @@
-import axios from "axios";
-import { api_endpoint } from "./config";
-
-// Get access token from server then store it in sessionStorage
-export const getAccessToken = async () => {
-  const res = await axios.get(`${api_endpoint}/auth/refresh_token`, {
-    withCredentials: true,
-  });
-  sessionStorage.setItem("accessToken", res.data.accessToken);
-  return;
-};
+import { axiosInstance } from "./axiosInstance";
 
 export const login = async (username, password) => {
-  const res = await axios.post(
-    `${api_endpoint}/auth/login`,
+  const res = await axiosInstance.post(
+    "/auth/login",
     {
       username,
       password,
@@ -24,8 +14,8 @@ export const login = async (username, password) => {
 };
 
 export const register = async (username, password) => {
-  const res = await axios.post(
-    `${api_endpoint}/auth/register`,
+  const res = await axiosInstance.post(
+    "/auth/register",
     {
       username,
       password,

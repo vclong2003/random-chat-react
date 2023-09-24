@@ -17,7 +17,7 @@ export default function Login() {
       return login(username, password);
     },
     onSuccess: (data) => {
-      sessionStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("accessToken", data.accessToken);
       window.location.href = destination;
     },
   });

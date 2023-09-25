@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
 import { Button, Container, Form, Image } from "react-bootstrap";
-import { signInWithGoogle } from "../../services/Firebase/Auth";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -21,9 +20,6 @@ export default function Login() {
         className={styles.loginForm}
         onSubmit={(evt) => {
           evt.preventDefault();
-          signInWithGoogle(() => {
-            console.log("success");
-          });
         }}>
         <Form.Group>
           <Form.Control

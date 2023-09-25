@@ -2,23 +2,10 @@ import { Container } from "react-bootstrap";
 import styles from "./styles.module.css";
 import Avatar from "../../components/avatar";
 import Tweet from "../../components/tweet";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-
-const testFetch = axios.get("http://localhost:3001/api/test").then((res) => {
-  return res.data;
-});
 
 export default function Home() {
-  const testQuery = useQuery({ queryKey: ["test"], queryFn: () => testFetch });
-
-  if (testQuery.isError) console.log(testQuery.error);
-
   return (
     <Container fluid className={styles.container}>
-      {console.log(sessionStorage.getItem("accessToken"))}
-      {testQuery.isLoading && <div>Loading...</div>}
-      {testQuery.isSuccess && <div>{testQuery.data}</div>}
       <Container fluid className={styles.pageTitle}>
         Home
       </Container>

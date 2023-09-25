@@ -37,7 +37,7 @@ export default function NavigationPane() {
         <Image
           className={styles.logo}
           alt=""
-          src={require("../../assets/icons/twitterLogo.svg").default}
+          src={require("../../assets/icons/xLogo.png")}
         />
       </Container>
 

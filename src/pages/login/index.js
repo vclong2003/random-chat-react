@@ -1,8 +1,6 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
 import { Button, Container, Form, Image } from "react-bootstrap";
-import { useMutation } from "@tanstack/react-query";
-import { login } from "../../api/auth";
 import { signInWithGoogle } from "../../services/Firebase/Auth";
 
 export default function Login() {
@@ -17,7 +15,7 @@ export default function Login() {
       <Image
         className={styles.logo}
         alt=""
-        src={require("../../assets/icons/twitterLogo.svg").default}
+        src={require("../../assets/icons/xLogo.png")}
       />
       <Form
         className={styles.loginForm}

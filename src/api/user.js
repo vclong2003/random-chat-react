@@ -1,9 +1,8 @@
-import axios from "axios";
-import { api_endpoint } from "./config";
 import { axiosInstance } from "./axiosInstance";
 
 export const getUserInfo = async () => {
-  const res = await axiosInstance.get("/user/info");
+  const res = await axiosInstance.get("/user");
+  console.log(res);
   return res.data;
 };
 

@@ -5,21 +5,32 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Get access token from server then store it in sessionStorage
+// Get access token from server then store it in local storage
 export const getAccessToken = async () => {
   const res = await axiosInstance.get("/auth/token");
 
+  console.log(res.data.accessToken);
+
   localStorage.setItem("accessToken", res.data.accessToken);
-  return res.data.accessToken;
+
+  return;
 };
 
 // Get new access token if 403 response is received
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response && error.response.status === 403) {
-      const newAccessToken = await getAccessToken();
-      error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+    if (
+      error.response &&
+      error.response.status === 403 &&
+      !error.config._retry
+    ) {
+      await getAccessToken();
+
+      error.config.headers["Authorization"] = `Bearer ${localStorage.getItem(
+        "accessToken"
+      )}`;
+      error.config._retry = true;
 
       return axiosInstance(error.config);
     }
@@ -28,15 +39,10 @@ axiosInstance.interceptors.response.use(
 );
 
 // Set access token in request header
-axiosInstance.interceptors.request.use(
-  (config) => {
-    config.headers["Authorization"] = `Bearer ${localStorage.getItem(
-      "accessToken"
-    )}`;
+axiosInstance.interceptors.request.use((config) => {
+  config.headers["Authorization"] = `Bearer ${localStorage.getItem(
+    "accessToken"
+  )}`;
 
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+  return config;
+});

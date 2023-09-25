@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import { Button, Container, Form, Image } from "react-bootstrap";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../api/auth";
+import { signInWithGoogle } from "../../services/Firebase/Auth";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -11,26 +12,21 @@ export default function Login() {
   const queryString = new URLSearchParams(window.location.search);
   const destination = queryString.get("to") ?? "/";
 
-  const loginMutation = useMutation({
-    mutationFn: (evt) => {
-      evt.preventDefault();
-      return login(username, password);
-    },
-    onSuccess: (data) => {
-      localStorage.setItem("accessToken", data.accessToken);
-      window.location.href = destination;
-    },
-  });
-
   return (
     <Container className={styles.container}>
-      {console.log(queryString.get("to"))}
       <Image
         className={styles.logo}
         alt=""
         src={require("../../assets/icons/twitterLogo.svg").default}
       />
-      <Form className={styles.loginForm} onSubmit={loginMutation.mutate}>
+      <Form
+        className={styles.loginForm}
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          signInWithGoogle(() => {
+            console.log("success");
+          });
+        }}>
         <Form.Group>
           <Form.Control
             type="text"

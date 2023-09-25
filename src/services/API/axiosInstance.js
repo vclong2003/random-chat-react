@@ -1,48 +1,49 @@
 import axios from "axios";
 
+let accessToken = null;
+
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:3001/api",
   withCredentials: true,
 });
 
-// Get access token from server then store it in local storage
-export const getAccessToken = async () => {
-  const res = await axiosInstance.get("/auth/token");
-
-  console.log(res.data.accessToken);
-
-  localStorage.setItem("accessToken", res.data.accessToken);
-
-  return;
+// Verify access token
+const verifyAccessToken = async () => {
+  try {
+    await axios.get("http://localhost:3001/api/auth", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+  } catch (err) {
+    await getAccessToken();
+  }
 };
 
-// Get new access token if 403 response is received
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    if (
-      error.response &&
-      error.response.status === 403 &&
-      !error.config._retry
-    ) {
-      await getAccessToken();
+// Get access token from server then store it in local storage
+const getAccessToken = async () => {
+  try {
+    const res = await axios.get("http://localhost:3001/api/auth/token", {
+      withCredentials: true,
+    });
 
-      error.config.headers["Authorization"] = `Bearer ${localStorage.getItem(
-        "accessToken"
-      )}`;
-      error.config._retry = true;
+    accessToken = res.data.accessToken;
 
-      return axiosInstance(error.config);
-    }
-    return Promise.reject(error);
+    console.log(res.data);
+  } catch (error) {
+    throw error;
   }
-);
+};
 
 // Set access token in request header
-axiosInstance.interceptors.request.use((config) => {
-  config.headers["Authorization"] = `Bearer ${localStorage.getItem(
-    "accessToken"
-  )}`;
+axiosInstance.interceptors.request.use(async (config) => {
+  if (!accessToken) {
+    await getAccessToken();
+  }
+
+  config.headers["Authorization"] = `Bearer ${accessToken}`;
+
+  console.log(accessToken);
+
+  await verifyAccessToken();
 
   return config;
 });

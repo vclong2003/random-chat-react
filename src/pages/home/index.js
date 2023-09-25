@@ -2,8 +2,14 @@ import { Container } from "react-bootstrap";
 import styles from "./styles.module.css";
 import Avatar from "../../components/avatar";
 import Tweet from "../../components/tweet";
+import { useContext } from "react";
+import { UserContext } from "../..";
 
 export default function Home() {
+  const user = useContext(UserContext);
+
+  console.log(user);
+
   return (
     <Container fluid className={styles.container}>
       <Container fluid className={styles.pageTitle}>

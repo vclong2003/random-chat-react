@@ -2,7 +2,7 @@ import { axiosInstance } from "./axiosInstance";
 
 export const getUserInfo = async () => {
   const res = await axiosInstance.get("/user");
-  console.log(res);
+
   return res.data;
 };
 

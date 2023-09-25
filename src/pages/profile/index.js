@@ -1,6 +1,8 @@
 import { Container, Image } from "react-bootstrap";
 import styles from "./styles.module.css";
 import Avatar from "../../components/avatar";
+import { useQuery } from "@tanstack/react-query";
+import { getUserInfo } from "../../services/API/user";
 
 export default function Profile() {
   return (

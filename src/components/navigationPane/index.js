@@ -34,11 +34,11 @@ export default function NavigationPane() {
   return (
     <Container fluid className={styles.container}>
       <Container fluid className={styles.logoContainer}>
-        <Image
+        {/* <Image
           className={styles.logo}
           alt=""
           src={require("../../assets/icons/xLogo.png")}
-        />
+        /> */}
       </Container>
 
       <Container fluid className={styles.menuContainer}>

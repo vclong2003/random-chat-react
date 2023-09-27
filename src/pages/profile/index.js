@@ -1,10 +1,16 @@
 import { Container, Image } from "react-bootstrap";
 import styles from "./styles.module.css";
 import Avatar from "../../components/avatar";
-import { useQuery } from "@tanstack/react-query";
-import { getUserInfo } from "../../services/API/user";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export default function Profile() {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["user"] }, { retry: false });
+  }, []);
+
   return (
     <Container fluid className={styles.container}>
       <Container fluid className={styles.pageTitle}>

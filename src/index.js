@@ -29,15 +29,17 @@ function UserProvider({ children }) {
     retry: false,
   });
 
-  if (userQuery.isFetching) {
+  useEffect(() => {
+    if (userQuery.isSuccess) {
+      setUser(userQuery.data);
+    }
+  }, [userQuery.isSuccess]);
+
+  if (userQuery.isLoading) {
     return <div>Loading...</div>;
   }
 
-  return (
-    <UserContext.Provider value={useQuery.data}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

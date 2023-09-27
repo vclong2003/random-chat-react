@@ -13,8 +13,11 @@ const verifyAccessToken = async () => {
     await axios.get("http://localhost:3001/api/auth", {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
+    console.log("Access token is valid");
   } catch (err) {
+    console.log("Access token is invalid. Getting a new one...");
     await getAccessToken();
+    console.log("Got a new access token");
   }
 };
 
@@ -26,8 +29,6 @@ const getAccessToken = async () => {
     });
 
     accessToken = res.data.accessToken;
-
-    console.log(res.data);
   } catch (error) {
     throw error;
   }
@@ -40,8 +41,6 @@ axiosInstance.interceptors.request.use(async (config) => {
   }
 
   config.headers["Authorization"] = `Bearer ${accessToken}`;
-
-  console.log(accessToken);
 
   await verifyAccessToken();
 

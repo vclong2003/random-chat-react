@@ -16,8 +16,7 @@ export default function Login() {
       evt.preventDefault();
       return login(username, password);
     },
-    onSuccess: (data) => {
-      localStorage.setItem("accessToken", data.accessToken);
+    onSuccess: () => {
       window.location.href = destination;
     },
   });
@@ -29,7 +28,7 @@ export default function Login() {
         alt=""
         src={require("../../assets/icons/xLogo.png")}
       />
-      <Form className={styles.loginForm} onSubmit={loginMutation.mutate}>
+      <Form className={styles.loginForm} onClick={loginMutation.mutate}>
         <Form.Group>
           <Form.Control
             type="text"

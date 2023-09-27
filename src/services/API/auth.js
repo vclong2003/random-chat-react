@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const login = async (username, password) => {
-  const res = await axios.post(
+  await axios.post(
     "http://localhost:3001/api/auth/login",
     {
       username,
@@ -10,5 +10,5 @@ export const login = async (username, password) => {
     { withCredentials: true }
   );
 
-  return res.data;
+  return;
 };

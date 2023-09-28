@@ -8,8 +8,6 @@ import { UserContext } from "../..";
 export default function Home() {
   const user = useContext(UserContext);
 
-  console.log(user);
-
   return (
     <Container fluid className={styles.container}>
       <Container fluid className={styles.pageTitle}>

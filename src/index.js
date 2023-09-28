@@ -15,31 +15,34 @@ import MainLayout from "./components/layouts/mainLayout";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Profile from "./pages/profile";
-import { getUserInfo } from "./services/API/user";
+import userQueries from "./services/API/user";
 
 const queryClient = new QueryClient();
 
 export const UserContext = createContext();
 function UserProvider({ children }) {
-  const [user, setUser] = useState();
-
-  const userQuery = useQuery({
-    queryKey: ["user"],
-    queryFn: getUserInfo,
-    retry: false,
-  });
+  const [user, setUser] = useState({ loggedIn: false });
+  const [fetchingUser, setFetchingUser] = useState(false);
 
   useEffect(() => {
-    if (userQuery.isSuccess) {
-      setUser(userQuery.data);
-    }
-  }, [userQuery.isSuccess]);
+    setFetchingUser(true);
 
-  if (userQuery.isLoading) {
-    return <div>Loading...</div>;
-  }
+    userQueries.getUserInfo(
+      (data) => {
+        setUser({ ...user, loggedIn: true, ...data });
+        setFetchingUser(false);
+      },
+      () => {
+        setFetchingUser(false);
+      }
+    );
+  }, []);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return fetchingUser ? (
+    <div>Loading ...</div>
+  ) : (
+    <UserContext.Provider value={user}>{children}</UserContext.Provider>
+  );
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

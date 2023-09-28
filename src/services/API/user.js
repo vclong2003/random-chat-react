@@ -1,10 +1,17 @@
 import { axiosInstance } from "./axiosInstance";
 
-export const getUserInfo = async () => {
-  const res = await axiosInstance.get("/user");
-
-  return res.data;
+const getUserInfo = (successCallback, errorCallback) => {
+  axiosInstance
+    .get("/user")
+    .then((res) => {
+      successCallback(res.data);
+    })
+    .catch((error) => {
+      errorCallback(error);
+    });
 };
+
+export default { getUserInfo };
 
 // export const findUserByName = async (username) => {
 //   const res = await axios.get(`${api_endpoint}/user/${username}`, {

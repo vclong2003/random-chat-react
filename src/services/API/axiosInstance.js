@@ -7,20 +7,6 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Verify access token
-const verifyAccessToken = async () => {
-  try {
-    await axios.get("http://localhost:3001/api/auth", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    console.log("Access token is valid");
-  } catch (err) {
-    console.log("Access token is invalid. Getting a new one...");
-    await getAccessToken();
-    console.log("Got a new access token");
-  }
-};
-
 // Get access token from server then store it in local storage
 const getAccessToken = async () => {
   try {
@@ -29,20 +15,45 @@ const getAccessToken = async () => {
     });
 
     accessToken = res.data.accessToken;
+    return;
   } catch (error) {
     throw error;
   }
 };
 
 // Set access token in request header
-axiosInstance.interceptors.request.use(async (config) => {
-  if (!accessToken) {
-    await getAccessToken();
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    if (!accessToken) {
+      await getAccessToken();
+    }
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
+);
 
-  config.headers["Authorization"] = `Bearer ${accessToken}`;
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
 
-  await verifyAccessToken();
+    if (error.response.status === 403 && !originalRequest._retry) {
+      console.log("token expired, getting new one");
+      await getAccessToken();
 
-  return config;
-});
+      originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+
+      console.log("got new token, restarting");
+      return axiosInstance(originalRequest);
+    }
+
+    console.log("other error occured");
+    return Promise.reject(error);
+  }
+);

@@ -6,7 +6,8 @@ import { useContext, useEffect } from "react";
 import { UserContext } from "../..";
 
 export default function Profile() {
-  const { id, username, bio, followers, following } = useContext(UserContext);
+  const { id, username, bio, followers, following, avatarUrl, coverUrl } =
+    useContext(UserContext);
 
   return (
     <Container fluid className={styles.container}>
@@ -14,15 +15,10 @@ export default function Profile() {
         Your account
       </Container>
       <Container fluid className={styles.infoContainer}>
-        <div
-          className={styles.imgContainer}
-          style={{ backgroundImage: "https://picsum.photos/600/200" }}>
-          <Image
-            src="https://picsum.photos/600/200"
-            className={styles.coverImg}
-          />
+        <div className={styles.imgContainer}>
+          <Image src={coverUrl} className={styles.coverImg} />
           <div className={styles.avatarContainer}>
-            <Avatar url="https://picsum.photos/200/200" />
+            <Avatar url={avatarUrl} />
           </div>
         </div>
 

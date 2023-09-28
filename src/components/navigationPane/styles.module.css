@@ -1,6 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 10px;
 }
 
 .logo {
@@ -9,4 +11,26 @@
   margin-top: 12px;
   margin-bottom: 12px;
   margin-left: 10px;
+}
+
+.divider {
+  flex-grow: 1;
+}
+
+.accountContainer {
+  width: 100%;
+  display: flex;
+  font-display: row;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: none;
+}
+.avatarContainer {
+  width: 40px;
+  margin-right: 10px;
+}
+.username {
+  font-size: 1.1rem;
+  font-weight: 700;
 }

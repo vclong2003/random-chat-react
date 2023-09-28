@@ -1,11 +1,15 @@
+import { useContext } from "react";
 import MenuItem from "./menuItem";
 import styles from "./styles.module.css";
 import { Container, Image } from "react-bootstrap";
+import { UserContext } from "../..";
+import Avatar from "../avatar";
+import { Link } from "react-router-dom";
 
 const menuItems = [
   {
     name: "Home",
-    url: "#",
+    url: "/",
     icon: require("../../assets/icons/home.svg").default,
   },
   {
@@ -25,12 +29,13 @@ const menuItems = [
   },
   {
     name: "Profile",
-    url: "#",
+    url: "/profile",
     icon: require("../../assets/icons/profile.svg").default,
   },
 ];
 
 export default function NavigationPane() {
+  const { username, avatarUrl } = useContext(UserContext);
   return (
     <Container fluid className={styles.container}>
       <Container fluid className={styles.logoContainer}>
@@ -51,6 +56,18 @@ export default function NavigationPane() {
           />
         ))}
       </Container>
+
+      <Container className={styles.divider} />
+
+      <Link
+        to="/profile"
+        about="Your profile"
+        className={styles.accountContainer}>
+        <div className={styles.avatarContainer}>
+          <Avatar url={avatarUrl} />
+        </div>
+        <div className={styles.username}>{username}</div>
+      </Link>
     </Container>
   );
 }

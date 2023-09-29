@@ -1,26 +1,32 @@
 import axios from "axios";
 import { api_endpoint } from "./config";
+import { axiosInstance } from "./axiosInstance";
 
-export const getAllTweets = async () => {
+const getAllTweets = async () => {
   const res = await axios.get(`${api_endpoint}/post`, {
     withCredentials: true,
   });
   return res.data;
 };
 
-export const post = async (content) => {
-  const res = await axios.post(
-    `${api_endpoint}/post`,
-    {
-      content,
-    },
-    { withCredentials: true }
-  );
-
-  return res.data;
+const post = (content, successCallback, errorCallback) => {
+  axiosInstance
+    .post(
+      `/post`,
+      {
+        content,
+      },
+      { withCredentials: true }
+    )
+    .then((res) => {
+      successCallback(res.data);
+    })
+    .catch((error) => {
+      errorCallback(error);
+    });
 };
 
-export const deleteTweet = async (tweetId) => {
+const deleteTweet = async (tweetId) => {
   const res = await axios.delete(`${api_endpoint}/post/${tweetId}`, {
     withCredentials: true,
   });
@@ -28,7 +34,7 @@ export const deleteTweet = async (tweetId) => {
   return res.data;
 };
 
-export const likeTweet = async (tweetId) => {
+const likeTweet = async (tweetId) => {
   const res = await axios.post(
     `${api_endpoint}/post/${tweetId}/like`,
     {
@@ -40,7 +46,7 @@ export const likeTweet = async (tweetId) => {
   return res.data;
 };
 
-export const unlikeTweet = async (tweetId) => {
+const unlikeTweet = async (tweetId) => {
   const res = await axios.delete(
     `${api_endpoint}/post/${tweetId}/unlike`,
     {
@@ -52,7 +58,7 @@ export const unlikeTweet = async (tweetId) => {
   return res.data;
 };
 
-export const commentTweet = async (tweetId, content) => {
+const commentTweet = async (tweetId, content) => {
   const res = await axios.post(
     `${api_endpoint}/post/${tweetId}/comment`,
     {
@@ -64,3 +70,6 @@ export const commentTweet = async (tweetId, content) => {
 
   return res.data;
 };
+
+const postQueries = { getAllTweets, post };
+export default postQueries;

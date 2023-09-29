@@ -4,6 +4,7 @@ import Avatar from "../../components/avatar";
 import Tweet from "../../components/tweet";
 import { useContext } from "react";
 import { UserContext } from "../..";
+import Post from "./post";
 
 export default function Home() {
   const user = useContext(UserContext);
@@ -14,29 +15,8 @@ export default function Home() {
         Home
       </Container>
 
-      <Container fluid className={styles.postContainer}>
-        <div className={styles.postInputContainer}>
-          <div className={styles.postInputAvatar}>
-            <Avatar url="https://picsum.photos/200" />
-          </div>
-          <input
-            type="text"
-            placeholder="What’s happening?"
-            className={styles.postTextInput}
-          />
-        </div>
-        <div className={styles.postButtonsContainer}>
-          <img
-            alt=""
-            src={require("../../assets/icons/imageUpload.png")}
-            className={styles.imageUploadIcon}
-          />
-
-          <button disabled className={styles.postButton}>
-            Tweet
-          </button>
-        </div>
-      </Container>
+      {/* Post */}
+      <Post />
 
       <Container fluid className={styles.tweetContainer}>
         <Tweet />

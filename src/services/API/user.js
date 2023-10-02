@@ -1,26 +1,19 @@
 import { axiosInstance } from "./axiosInstance";
 
-const getUserInfo = (successCallback, errorCallback) => {
-  axiosInstance
-    .get("/user")
-    .then((res) => {
-      successCallback(res.data);
-    })
-    .catch((error) => {
-      errorCallback(error);
-    });
+const getUserInfo = async () => {
+  const res = await axiosInstance.get("/user");
+
+  return res.data;
 };
 
-export default { getUserInfo };
-
-// export const findUserByName = async (username) => {
-//   const res = await axios.get(`${api_endpoint}/user/${username}`, {
-//     headers: {
-//       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-//     },
-//   });
-//   return res.data;
-// };
+const findUserByName = async (username) => {
+  const res = await axiosInstance.get(`/user/${username}`, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+    },
+  });
+  return res.data;
+};
 
 // export const updateUsername = async (username) => {
 //   const res = await axios.put(
@@ -69,3 +62,6 @@ export default { getUserInfo };
 
 //   return res.data;
 // };
+
+const userQueries = { getUserInfo, findUserByName };
+export default userQueries;

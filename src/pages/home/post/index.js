@@ -8,18 +8,18 @@ export default function Post() {
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
 
-  const handleCreatePost = () => {
-    setLoading(true);
-    postQueries.post(
-      content,
-      () => {
-        setLoading(false);
-      },
-      () => {
-        setLoading(false);
-      }
-    );
-  };
+  // const handleCreatePost = () => {
+  //   setLoading(true);
+  //   postQueries.post(
+  //     content,
+  //     () => {
+  //       setLoading(false);
+  //     },
+  //     () => {
+  //       setLoading(false);
+  //     }
+  //   );
+  // };
 
   return (
     <Container fluid className={styles.postContainer}>
@@ -44,10 +44,7 @@ export default function Post() {
           className={styles.imageUploadIcon}
         />
 
-        <button
-          disabled={content.length < 10}
-          className={styles.postButton}
-          onClick={handleCreatePost}>
+        <button disabled={content.length < 10} className={styles.postButton}>
           Tweet
         </button>
       </div>

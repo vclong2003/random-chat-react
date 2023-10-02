@@ -10,39 +10,37 @@ import {
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import userQueries from "./services/API/user";
+
 import MainLayout from "./components/layouts/mainLayout";
 
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Profile from "./pages/profile";
-import userQueries from "./services/API/user";
 
 const queryClient = new QueryClient();
 
 export const UserContext = createContext();
 function UserProvider({ children }) {
   const [user, setUser] = useState({ loggedIn: false });
-  const [fetchingUser, setFetchingUser] = useState(false);
+
+  const userQuery = useQuery({
+    queryKey: ["user"],
+    queryFn: userQueries.getUserInfo,
+    staleTime: Infinity,
+  });
 
   useEffect(() => {
-    setFetchingUser(true);
+    if (userQuery.isSuccess) {
+      setUser({ ...user, loggedIn: true, ...userQuery.data });
+    }
+  }, [userQuery.isSuccess]);
 
-    userQueries.getUserInfo(
-      (data) => {
-        setUser({ ...user, loggedIn: true, ...data });
-        setFetchingUser(false);
-      },
-      () => {
-        setFetchingUser(false);
-      }
-    );
-  }, []);
+  if (userQuery.isFetching) {
+    return <div>Loading...</div>;
+  }
 
-  return fetchingUser ? (
-    <div>Loading ...</div>
-  ) : (
-    <UserContext.Provider value={user}>{children}</UserContext.Provider>
-  );
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

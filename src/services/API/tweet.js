@@ -9,21 +9,16 @@ const getAllTweets = async () => {
   return res.data;
 };
 
-const post = (content, successCallback, errorCallback) => {
-  axiosInstance
-    .post(
-      `/post`,
-      {
-        content,
-      },
-      { withCredentials: true }
-    )
-    .then((res) => {
-      successCallback(res.data);
-    })
-    .catch((error) => {
-      errorCallback(error);
-    });
+const post = async (content) => {
+  const res = await axiosInstance.post(
+    `/post`,
+    {
+      content,
+    },
+    { withCredentials: true }
+  );
+
+  return res.data;
 };
 
 const deleteTweet = async (tweetId) => {

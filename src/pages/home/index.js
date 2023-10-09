@@ -1,6 +1,5 @@
 import { Container } from "react-bootstrap";
 import styles from "./styles.module.css";
-import Avatar from "../../components/avatar";
 import Tweet from "../../components/tweet";
 import { useContext } from "react";
 import { UserContext } from "../..";

@@ -8,7 +8,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import userQueries from "./services/API/user";
 
@@ -21,6 +21,7 @@ import Profile from "./pages/profile";
 const queryClient = new QueryClient();
 
 export const UserContext = createContext();
+
 function UserProvider({ children }) {
   const [user, setUser] = useState({ loggedIn: false });
 
@@ -28,6 +29,7 @@ function UserProvider({ children }) {
     queryKey: ["user"],
     queryFn: userQueries.getUserInfo,
     staleTime: Infinity,
+    retry: false,
   });
 
   useEffect(() => {
@@ -38,6 +40,11 @@ function UserProvider({ children }) {
 
   if (userQuery.isFetching) {
     return <div>Loading...</div>;
+  }
+
+  if (userQuery.isError) {
+    window.location.href = "/login";
+    return null;
   }
 
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>;

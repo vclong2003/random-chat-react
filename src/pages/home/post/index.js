@@ -2,24 +2,12 @@ import { Container } from "react-bootstrap";
 import styles from "./styles.module.css";
 import Avatar from "../../../components/avatar";
 import { useState } from "react";
-import postQueries from "../../../services/API/tweet";
 
 export default function Post() {
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
 
-  // const handleCreatePost = () => {
-  //   setLoading(true);
-  //   postQueries.post(
-  //     content,
-  //     () => {
-  //       setLoading(false);
-  //     },
-  //     () => {
-  //       setLoading(false);
-  //     }
-  //   );
-  // };
+  const handleCreatePost = () => {};
 
   return (
     <Container fluid className={styles.postContainer}>

@@ -14,13 +14,17 @@ root.render(
   </React.StrictMode>
 );
 
+let socketId = "";
+
 socket.on("connect", () => {
   console.log("Connected");
+  socketId = socket.id;
 });
 
 function App() {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [ready, setReady] = useState(false);
 
   const msgEnd = useRef(null);
 
@@ -40,6 +44,26 @@ function App() {
 
     return () => {
       socket.off("receive-message");
+    };
+  });
+
+  useEffect(() => {
+    socket.on("ready", () => {
+      setReady(true);
+    });
+
+    return () => {
+      socket.off("ready");
+    };
+  });
+
+  useEffect(() => {
+    socket.on("waiting", () => {
+      setReady(false);
+    });
+
+    return () => {
+      socket.off("waiting");
     };
   });
 
@@ -64,17 +88,23 @@ function App() {
         <div ref={msgEnd} />
       </Container>
       <Form className={styles.textInputContainer} onSubmit={handleSendMessage}>
-        <input
-          type="text"
-          className={styles.msgInput}
-          value={message}
-          onChange={(evt) => {
-            setMessage(evt.target.value);
-          }}
-        />
-        <button type="submit" className={styles.sendBtn}>
-          Send
-        </button>
+        {ready ? (
+          <>
+            <input
+              type="text"
+              className={styles.msgInput}
+              value={message}
+              onChange={(evt) => {
+                setMessage(evt.target.value);
+              }}
+            />
+            <button type="submit" className={styles.sendBtn} disabled={!ready}>
+              Send
+            </button>
+          </>
+        ) : (
+          "Waiting for another user to join..."
+        )}
       </Form>
     </Container>
   );
@@ -82,9 +112,14 @@ function App() {
 
 function MessageItem({ sender, time, content }) {
   return (
-    <Container fluid className={styles.message}>
+    <Container
+      fluid
+      className={styles.message}
+      style={{
+        backgroundColor: sender === socketId ? "#3aadc9" : "",
+      }}>
       <div className={styles.msgInfo}>
-        <div>{sender}</div>
+        <div>{sender === socketId ? "You" : "Anonymous"}</div>
         <div>{time}</div>
       </div>
       <div style={{ width: "100%", height: "20px" }} />

@@ -111,12 +111,14 @@ function App() {
 }
 
 function MessageItem({ sender, time, content }) {
+  time = new Date(time).toLocaleTimeString();
+
   return (
     <Container
       fluid
       className={styles.message}
       style={{
-        backgroundColor: sender === socketId ? "#3aadc9" : "",
+        backgroundColor: sender === socketId ? "#43d6f0" : "",
       }}>
       <div className={styles.msgInfo}>
         <div>{sender === socketId ? "You" : "Anonymous"}</div>

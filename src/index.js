@@ -5,7 +5,7 @@ import { Container, Form } from "react-bootstrap";
 import { io } from "socket.io-client";
 import styles from "./styles.module.css";
 
-const socket = io("http://localhost:3001");
+const socket = io("https://vcl-random-chat.onrender.com");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
